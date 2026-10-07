@@ -1,0 +1,65 @@
+.container { padding: 32px; background-color: #f8fafc; min-height: 100vh; font-family: 'DM Sans', sans-serif;}
+.header { margin-bottom: 24px; }
+.breadcrumb { font-size: 0.85rem; color: #64748b; margin-bottom: 8px; }
+.titleRow { display: flex; justify-content: space-between; align-items: flex-start; }
+.titleRow h1 { font-size: 1.8rem; color: #0f172a; margin: 0 0 4px 0; }
+.titleRow p { color: #64748b; font-size: 0.95rem; margin: 0; }
+
+.btnOutline {
+  background: transparent; border: 1px solid #cbd5e1; padding: 10px 20px;
+  border-radius: 8px; cursor: pointer; color: #334155; font-weight: 500;
+}
+.btnPrimary {
+  background-color: #0f5132; color: white; border: none; padding: 10px 24px;
+  border-radius: 8px; font-weight: 600; cursor: pointer;
+}
+.btnCancel {
+  background: transparent; border: 1px solid #cbd5e1; padding: 10px 24px;
+  border-radius: 8px; cursor: pointer; color: #64748b; font-weight: 500;
+}
+
+.contentGrid { display: grid; grid-template-columns: 250px 1fr; gap: 24px; }
+
+.photoUpload {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.photoBox {
+  width: 150px; height: 150px; border: 2px dashed #cbd5e1; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #16a34a; margin-bottom: 12px; cursor: pointer; background: white;
+}
+.photoBox:hover { background: #f0fdf4; }
+.photoIcon { font-size: 2rem; margin-bottom: 8px; }
+.photoUpload p { font-size: 0.8rem; color: #64748b; margin-bottom: 16px; }
+.dica {
+  background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px;
+  border-radius: 8px; font-size: 0.8rem; color: #166534; margin-top: 24px; text-align: left;
+}
+
+.formSection { background: white; border-radius: 12px; border: 1px solid #e2e8f0; }
+.formHeader {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px; border-bottom: 1px solid #e2e8f0;
+}
+.formHeader h2 { margin: 0; font-size: 1.2rem; color: #0f5132; }
+.badgeNovo { background: #d1e7dd; color: #0f5132; padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;}
+
+.formBody { padding: 24px; }
+.formBody h3 { font-size: 1rem; color: #334155; margin: 0 0 16px 0; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;}
+.sectionTitle { margin-top: 24px !important; }
+
+.formRow { display: flex; gap: 20px; margin-bottom: 16px; }
+.formGroup { display: flex; flex-direction: column; flex: 1; gap: 6px; }
+.formGroupFull { display: flex; flex-direction: column; width: 100%; gap: 6px; margin-bottom: 16px;}
+
+label { font-size: 0.85rem; font-weight: 500; color: #475569; }
+input, select {
+  padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+  font-size: 0.95rem; color: #1e293b; background: #f8fafc; outline: none;
+}
+input:focus, select:focus { border-color: #0f5132; background: white; }
+
+.formFooter {
+  padding: 20px 24px; border-top: 1px solid #e2e8f0;
+  display: flex; justify-content: flex-end; gap: 12px; background: #f8fafc; border-radius: 0 0 12px 12px;
+}
