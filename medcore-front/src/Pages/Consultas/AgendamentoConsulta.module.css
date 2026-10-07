@@ -1,0 +1,189 @@
+.pagina {
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #173c2b;
+}
+
+.conteudo {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 28px 32px 40px;
+}
+
+.caminho {
+    margin-bottom: 10px;
+    color: #7a8a82;
+    font-size: 13px;
+}
+
+.caminho span {
+    color: #087a43;
+    font-weight: 600;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.cabecalho h1 {
+    margin: 0;
+    color: #123d2b;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.cabecalho p {
+    margin: 7px 0 0;
+    color: #718078;
+    font-size: 14px;
+}
+
+.formulario {
+    overflow: hidden;
+    border: 1px solid #dce8e1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 80, 40, 0.04);
+}
+
+.secao {
+    padding: 25px 28px 30px;
+}
+
+.tituloSecao {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e4ece7;
+    color: #164c34;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.gradeFormulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 24px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.larguraCompleta {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    color: #40534a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #cfded6;
+    border-radius: 7px;
+    outline: none;
+    background-color: #ffffff;
+    color: #30443a;
+    font-family: inherit;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.campo input,
+.campo select {
+    height: 43px;
+    padding: 11px 13px;
+}
+
+.campo textarea {
+    min-height: 115px;
+    padding: 11px 13px;
+    resize: vertical;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #9aa9a1;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: #16844d;
+    box-shadow: 0 0 0 2px rgba(22, 132, 77, 0.08);
+}
+
+.rodape {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 18px 28px;
+    border-top: 1px solid #e3ebe6;
+    background-color: #fbfdfc;
+}
+
+.botaoCancelar,
+.botaoAgendar {
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botaoCancelar {
+    border: 1px solid #9fc8b1;
+    background-color: #ffffff;
+    color: #216b49;
+}
+
+.botaoCancelar:hover {
+    background-color: #f1f8f4;
+}
+
+.botaoAgendar {
+    border: 1px solid #087a43;
+    background-color: #087a43;
+    color: #ffffff;
+}
+
+.botaoAgendar:hover {
+    background-color: #066b3a;
+}
+
+@media (max-width: 800px) {
+    .conteudo {
+        padding: 20px;
+    }
+
+    .gradeFormulario {
+        grid-template-columns: 1fr;
+    }
+
+    .larguraCompleta {
+        grid-column: auto;
+    }
+
+    .rodape {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .botaoCancelar,
+    .botaoAgendar {
+        width: 100%;
+    }
+}
