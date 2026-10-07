@@ -6,6 +6,7 @@ import CadastroPaciente from "./Pages/Pacientes/CadastroPaciente";
 import HistoricoPaciente from "./Pages/Pacientes/HistoricoPaciente";
 import ListagemProfissionais from "./Pages/Profissionais/ListagemProfissionais";
 import CadastroProfissional from "./Pages/Profissionais/CadastroProfissional";
+import ListagemConsultas from "./Pages/Consultas/ListagemConsultas";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/profissionais" element={<ListagemProfissionais />} />
         <Route path="/profissionais/novo" element={<CadastroProfissional key="novo" />} />
         <Route path="/profissionais/editar/:id" element={<CadastroProfissional key="editar" />} />
+
+        <Route path="/consultas" element={<ListagemConsultas />} />
       </Routes>
     </BrowserRouter>
   );
