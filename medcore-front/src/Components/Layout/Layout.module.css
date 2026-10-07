@@ -1,0 +1,157 @@
+.app {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #1f2d26;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  border-top: 3px solid #166534;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 24px;
+  border-bottom: 1px solid #e3ece6;
+  background: #ffffff;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #14231b;
+  text-decoration: none;
+}
+
+.logoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #166534;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.busca {
+  width: 280px;
+  padding: 8px 10px;
+  border: 1px solid #e3ece6;
+  border-radius: 6px;
+  background: #f4f9f6;
+  font-size: 11px;
+  color: #1f2d26;
+  outline: none;
+}
+
+.busca:focus {
+  border-color: #166534;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+}
+
+.userInfo strong {
+  font-size: 11px;
+  color: #14231b;
+}
+
+.userInfo span {
+  font-size: 9px;
+  color: #6b7d73;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #166534;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.body {
+  display: flex;
+  min-height: calc(100vh - 55px);
+}
+
+.sidebar {
+  width: 190px;
+  flex-shrink: 0;
+  padding: 18px 8px;
+  border-right: 1px solid #e3ece6;
+  background: #ffffff;
+}
+
+.bloco {
+  margin-bottom: 18px;
+}
+
+.secao {
+  padding: 0 8px 8px;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: #6b7d73;
+}
+
+.item {
+  display: block;
+  margin-bottom: 2px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #1f2d26;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.item:hover {
+  background: #f1f8f3;
+}
+
+.itemAtivo {
+  background: #e3f3e8;
+  border-color: #166534;
+  color: #166534;
+  font-weight: 700;
+}
+
+.conteudo {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    display: none;
+  }
+  .busca {
+    width: 160px;
+  }
+}
