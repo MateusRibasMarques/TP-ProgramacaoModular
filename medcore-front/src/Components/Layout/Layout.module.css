@@ -147,11 +147,81 @@
   min-width: 0;
 }
 
+.btnMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  width: 30px;
+  height: 30px;
+  margin-right: -20px;
+  padding: 0 7px;
+  border: 1px solid #e3ece6;
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.btnMenu span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: #166534;
+}
+
+.btnMenu:hover {
+  background: #f1f8f3;
+  border-color: #166534;
+}
+
+.sidebar {
+  transition: width 0.2s ease, padding 0.2s ease;
+  overflow: hidden;
+}
+
+.sidebarFechada {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-right: none;
+}
+
+.item {
+  white-space: nowrap;
+}
+
+.fundoMenu {
+  display: none;
+}
+
 @media (max-width: 860px) {
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    bottom: 0;
+    z-index: 20;
+    overflow-y: auto;
+    box-shadow: 4px 0 16px rgba(20, 35, 27, 0.12);
+  }
+  .sidebarFechada {
+    box-shadow: none;
+  }
+  .fundoMenu {
+    display: block;
+    position: fixed;
+    inset: 55px 0 0 0;
+    z-index: 10;
+    background: rgba(20, 35, 27, 0.25);
   }
   .busca {
     width: 160px;
+  }
+}
+
+@media (max-width: 560px) {
+  .busca,
+  .userInfo {
+    display: none;
   }
 }

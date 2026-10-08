@@ -1,102 +1,137 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Layout from '../../Components/Layout/Layout';
 import styles from './HistoricoPaciente.module.css';
+
+// Mocks temporários para Sprint 1
+const consultas = [
+  { data: '12/09/2026 • 09:30', titulo: 'Cardiologia — Dr. Ricardo Menezes', texto: 'Avaliação de rotina. Pressão controlada, mantida a medicação atual.', status: 'Realizada' },
+  { data: '02/06/2026 • 14:00', titulo: 'Clínica geral — Dra. Paula Andrade', texto: 'Queixa de cansaço frequente. Solicitados exames de sangue e hemograma.', status: 'Realizada' },
+  { data: '18/02/2026 • 10:15', titulo: 'Dermatologia — Dra. Lúcia Prado', texto: 'Tratamento de dermatite de contato. Pomada prescrita por 10 dias.', status: 'Realizada' },
+];
+
+const internacoes = [
+  { data: '10/03/2025 a 14/03/2025', titulo: 'Quarto 202 — Dr. Ricardo Menezes', texto: 'Crise hipertensiva. Ajuste de medicação e monitoramento contínuo.', status: 'Alta registrada' },
+  { data: '22/11/2023 a 24/11/2023', titulo: 'Quarto 101 — Dra. Paula Andrade', texto: 'Desidratação por gastroenterite. Hidratação venosa.', status: 'Alta registrada' },
+];
+
+const resumo = [
+  ['Tipo sanguíneo', 'O+'],
+  ['Convênio', 'Unimed Nacional'],
+  ['Médico de referência', 'Dra. Paula Andrade'],
+  ['Cadastro', '05/08/2022'],
+  ['Endereço', 'Rua das Acácias, 120 — Belo Horizonte - MG'],
+];
 
 export default function HistoricoPaciente() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [aba, setAba] = useState('consultas');
+  const itens = aba === 'consultas' ? consultas : internacoes;
 
   return (
-    <main className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.titleRow}>
+    <Layout>
+      <div className={styles.page}>
+        <div className={styles.crumb}>
+          <Link to="/">Início</Link> / <Link to="/pacientes">Pacientes</Link> /{' '}
+          <strong>Histórico médico</strong>
+        </div>
+
+        <div className={styles.head}>
           <div>
-            <div className={styles.breadcrumb}>Início / Pacientes / <strong>Histórico médico</strong></div>
-            <h1>Histórico médico</h1>
-            <p>Registro consolidado de consultas e internações.</p>
+            <h1 className={styles.title}>Histórico médico</h1>
+            <p className={styles.sub}>Registro consolidado de consultas e internações.</p>
           </div>
-          <div className={styles.headerActions}>
-            <button className={styles.btnOutline} onClick={() => navigate(-1)}>&larr; Voltar</button>
-            <button className={styles.btnPrimary}>Editar paciente</button>
+          <div className={styles.headAcoes}>
+            <button type="button" className={styles.btnOutline} onClick={() => navigate(-1)}>
+              ‹ Voltar
+            </button>
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              onClick={() => navigate(`/pacientes/editar/${id}`)}
+            >
+              Editar paciente
+            </button>
           </div>
         </div>
-      </header>
 
-      <div className={styles.heroCard}>
-        <div className={styles.heroAvatar}>AS</div>
-        <div className={styles.heroInfo}>
-          <h2>Ana Beatriz Souza</h2>
-          <p>CPF 123.456.789-00 &nbsp;|&nbsp; 37 anos (14/03/1986) &nbsp;|&nbsp; (31) 99876-5432 &nbsp;|&nbsp; ana.souza@email.com</p>
+        <div className={styles.perfil}>
+          <div className={styles.avatar}>AS</div>
+          <div className={styles.perfilInfo}>
+            <div className={styles.nome}>Ana Beatriz Souza</div>
+            <div className={styles.meta}>
+              CPF 123.456.789-00 · 37 anos (14/03/1986) · (31) 99876-5432 · ana.souza@email.com
+            </div>
+          </div>
+          <span className={styles.prontuario}>Prontuário #00231</span>
         </div>
-        <div className={styles.prontuario}>Prontuário #00231</div>
+
+        <div className={styles.contentGrid}>
+          <aside className={styles.card}>
+            <div className={styles.cardHead}>Resumo clínico</div>
+            <ul className={styles.resumo}>
+              {resumo.map(([rotulo, valor]) => (
+                <li key={rotulo}>
+                  <span>{rotulo}</span>
+                  <strong>{valor}</strong>
+                </li>
+              ))}
+            </ul>
+            <div className={styles.alergias}>
+              <strong>Alergias:</strong> dipirona e penicilina.
+            </div>
+          </aside>
+
+          <section>
+            <div className={styles.stats}>
+              <div className={styles.stat}>
+                <span>Consultas realizadas</span>
+                <strong>8</strong>
+              </div>
+              <div className={styles.stat}>
+                <span>Internações</span>
+                <strong>{internacoes.length}</strong>
+              </div>
+              <div className={styles.stat}>
+                <span>Última consulta</span>
+                <strong>12/09/2026</strong>
+              </div>
+            </div>
+
+            <div className={styles.panel}>
+              <div className={styles.tabs}>
+                <button
+                  className={aba === 'consultas' ? `${styles.tab} ${styles.tabAtiva}` : styles.tab}
+                  onClick={() => setAba('consultas')}
+                >
+                  Consultas realizadas <span className={styles.count}>8</span>
+                </button>
+                <button
+                  className={aba === 'internacoes' ? `${styles.tab} ${styles.tabAtiva}` : styles.tab}
+                  onClick={() => setAba('internacoes')}
+                >
+                  Internações <span className={styles.count}>{internacoes.length}</span>
+                </button>
+              </div>
+
+              <div className={styles.timeline}>
+                {itens.map((item) => (
+                  <div key={item.data} className={styles.timelineItem}>
+                    <div className={styles.timelineDot} />
+                    <div className={styles.timelineConteudo}>
+                      <div className={styles.meta}>{item.data}</div>
+                      <div className={styles.nome}>{item.titulo}</div>
+                      <p>{item.texto}</p>
+                      <span className={styles.badge}>{item.status}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-
-      <div className={styles.contentGrid}>
-        <aside className={styles.sidebarResumo}>
-          <h3>Resumo clínico</h3>
-          <ul>
-            <li><span>Tipo sanguíneo</span> <strong>O+</strong></li>
-            <li><span>Convênio</span> <strong>Unimed Nacional</strong></li>
-            <li><span>Médico de referência</span> <strong>Dra. Paula Andrade</strong></li>
-            <li><span>Cadastro</span> <strong>05/08/2022</strong></li>
-            <li><span>Endereço</span> <strong>Rua das Acácias, 120<br/>Belo Horizonte - MG</strong></li>
-          </ul>
-          <div className={styles.alergias}>
-            <strong>Alergias:</strong> dipirona e penicilina.
-          </div>
-        </aside>
-
-        <section className={styles.mainContent}>
-          <div className={styles.statsRow}>
-            <div className={styles.statBox}>
-              <h2>8</h2>
-              <span>Consultas realizadas</span>
-            </div>
-            <div className={styles.statBox}>
-              <h2>2</h2>
-              <span>Internações</span>
-            </div>
-            <div className={styles.statBox}>
-              <h2 className={styles.dateDark}>12/09/2026</h2>
-              <span>Última consulta</span>
-            </div>
-          </div>
-
-          <div className={styles.tabs}>
-            <button className={styles.tabActive}>Consultas realizadas <span>8</span></button>
-            <button className={styles.tab}>Internações <span>2</span></button>
-          </div>
-
-          <div className={styles.timeline}>
-            <div className={styles.timelineItem}>
-              <div className={styles.timelineDot}></div>
-              <div className={styles.timelineContent}>
-                <small>12/09/2026 • 09:30</small>
-                <h4>Cardiologia — Dr. Ricardo Menezes</h4>
-                <p>Avaliação de rotina. Pressão controlada, mantida a medicação atual.</p>
-                <span className={styles.statusRealizada}>Realizada</span>
-              </div>
-            </div>
-            <div className={styles.timelineItem}>
-              <div className={styles.timelineDot}></div>
-              <div className={styles.timelineContent}>
-                <small>02/06/2026 • 14:00</small>
-                <h4>Clínica geral — Dra. Paula Andrade</h4>
-                <p>Queixa de cansaço frequente. Solicitados exames de sangue e hemograma.</p>
-                <span className={styles.statusRealizada}>Realizada</span>
-              </div>
-            </div>
-            <div className={styles.timelineItem}>
-              <div className={styles.timelineDot}></div>
-              <div className={styles.timelineContent}>
-                <small>18/02/2026 • 10:15</small>
-                <h4>Dermatologia — Dra. Lúcia Prado</h4>
-                <p>Tratamento de dermatite de contato. Pomada prescrita por 10 dias.</p>
-                <span className={styles.statusRealizada}>Realizada</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
+    </Layout>
   );
 }
