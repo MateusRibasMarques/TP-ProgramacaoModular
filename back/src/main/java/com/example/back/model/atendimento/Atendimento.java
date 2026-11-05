@@ -1,14 +1,22 @@
 package com.example.back.model.atendimento;
 
-
 import com.example.back.model.paciente.Paciente;
 import com.example.back.model.profissional.Profissional;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipoAtendimento")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ConsultaRotina.class, name = "CONSULTA_ROTINA"),
+        @JsonSubTypes.Type(value = ConsultaEspecializada.class, name = "CONSULTA_ESPECIALIZADA"),
+        @JsonSubTypes.Type(value = AtendimentoEmergencia.class, name = "EMERGENCIA"),
+        @JsonSubTypes.Type(value = ProcedimentoCirurgico.class, name = "CIRURGIA")
+})
 public abstract class Atendimento {
 
     @Id
@@ -31,7 +39,7 @@ public abstract class Atendimento {
     }
 
     public Atendimento(LocalDate data, LocalTime horario, Paciente paciente,
-                       Profissional profissionalResponsavel, String observacoes) {
+            Profissional profissionalResponsavel, String observacoes) {
         this.data = data;
         this.horario = horario;
         this.paciente = paciente;
@@ -41,6 +49,10 @@ public abstract class Atendimento {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getData() {

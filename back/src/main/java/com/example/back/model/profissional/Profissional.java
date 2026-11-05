@@ -1,11 +1,18 @@
 package com.example.back.model.profissional;
 
-
 import com.example.back.model.atendimento.Atendimento;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MedicoClinicoGeral.class, name = "CLINICO_GERAL"),
+        @JsonSubTypes.Type(value = MedicoEspecialista.class, name = "ESPECIALISTA"),
+        @JsonSubTypes.Type(value = Cirurgiao.class, name = "CIRURGIAO")
+})
 public abstract class Profissional {
 
     @Id
@@ -31,6 +38,10 @@ public abstract class Profissional {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
