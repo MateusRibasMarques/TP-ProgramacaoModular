@@ -1,19 +1,8 @@
 classDiagram
 direction TB
 
-%% ===== Interfaces =====
-class Validavel {
-  <<interface>>
-  +validar()* void
-}
+%% MedCore - modelo de domínio extraído do código (pacotes model/ e enums/)
 
-class Cancelavel {
-  <<interface>>
-  +cancelar()* void
-  +podeCancelar()* boolean
-}
-
-%% ===== Pacientes =====
 class Paciente {
   -id : Long
   -nome : String
@@ -22,157 +11,94 @@ class Paciente {
   -telefone : String
   -endereco : String
   -email : String
-  +calcularIdade() int
-  +atualizarContato(String telefone, String email) void
-  +getHistorico() Historico
 }
 
-class Historico {
-  -id : Long
-  +adicionarRegistro(RegistroHistorico registro) void
-  +listarRegistros() List~RegistroHistorico~
-  +listarAtendimentos() List~Atendimento~
-  +listarInternacoes() List~Internacao~
-}
-
-class RegistroHistorico {
-  -id : Long
-  -dataRegistro : LocalDateTime
-  -tipo : TipoRegistro
-  -descricao : String
-  -observacao : String
-}
-
-%% ===== Profissionais =====
-class ProfissionalSaude {
+class Profissional {
   <<abstract>>
   -id : Long
   -nome : String
   -registroProfissional : String
   -telefone : String
   -email : String
-  -ativo : boolean
-  +atualizarDados(String telefone, String email) void
-  +verificarDisponibilidade(LocalDateTime dataHora) boolean
-  +podeRealizar(Atendimento atendimento)* boolean
+  +validarAtendimento(Atendimento atendimento)* void
 }
 
-class ClinicoGeral {
-  +podeRealizar(Atendimento atendimento) boolean
-  +registrarConsulta(ConsultaRotina consulta, String observacoes) void
-  +encaminhar(Paciente paciente, Especialidade especialidade, String motivo) Encaminhamento
+class MedicoClinicoGeral {
+  +validarAtendimento(Atendimento atendimento) void
 }
 
 class MedicoEspecialista {
-  -especialidade : Especialidade
-  +podeRealizar(Atendimento atendimento) boolean
-  +atendeEspecialidade(Especialidade especialidade) boolean
+  -especialidade : String
+  +validarAtendimento(Atendimento atendimento) void
 }
 
 class Cirurgiao {
-  -areaCirurgica : String
-  -rqe : String
-  +podeRealizar(Atendimento atendimento) boolean
-  +registrarProcedimento(ProcedimentoCirurgico procedimento) void
-  +listarProcedimentos() List~ProcedimentoCirurgico~
+  -areaAtuacaoCirurgica : String
+  +validarAtendimento(Atendimento atendimento) void
 }
 
-class Encaminhamento {
-  -id : Long
-  -data : LocalDateTime
-  -especialidade : Especialidade
-  -motivo : String
-}
-
-%% ===== Atendimentos =====
 class Atendimento {
   <<abstract>>
   -id : Long
-  -dataHora : LocalDateTime
+  -data : LocalDate
+  -horario : LocalTime
   -observacoes : String
-  +validar()* void
-  +registrarObservacoes(String observacoes) void
 }
 
 class Consulta {
   <<abstract>>
   -motivo : String
-  -status : StatusConsulta
-  +confirmar() void
-  +iniciarAtendimento() void
-  +concluir(String observacoes) void
-  +cancelar() void
-  +podeCancelar() boolean
-  +registrarAusencia() void
-  +remarcar(LocalDateTime novaDataHora) Consulta
-  #alterarStatus(StatusConsulta novo) void
+  -situacao : StatusConsulta = AGENDADA
 }
 
-class ConsultaRotina {
-  +validar() void
-}
+class ConsultaRotina
 
 class ConsultaEspecializada {
-  -especialidade : Especialidade
-  +validar() void
+  -especialidade : String
 }
 
 class AtendimentoEmergencia {
-  -prioridade : Prioridade
-  -status : StatusEmergencia
-  +iniciarAvaliacao(ProfissionalSaude profissional) void
-  +concluir() void
-  +estaAguardando() boolean
-  +validar() void
+  -prioridade : PrioridadeAtendimento
+  -situacao : StatusAtendimentoEmergencia = AGUARDANDO_AVALIACAO
+  +iniciarAtendimento() void
+  +concluirAtendimento() void
 }
 
 class ProcedimentoCirurgico {
   -descricao : String
-  -tipoCirurgia : TipoCirurgia
-  -observacaoPreOperatoria : String
-  -observacaoPosOperatoria : String
-  -dataHoraInicio : LocalDateTime
-  -dataHoraFim : LocalDateTime
-  -status : StatusProcedimento
-  +iniciar() void
-  +concluir(String observacaoPos) void
-  +cancelar() void
-  +podeCancelar() boolean
-  +validar() void
+  -tipoCirurgia : String
+  -observacoesPreOperatorias : String
+  -observacoesPosOperatorias : String
+  -dataHoraInicioReal : LocalDateTime
+  -dataHoraFimReal : LocalDateTime
+  -situacao : StatusProcedimento = AGENDADO
+  +iniciarProcedimento() void
+  +concluirProcedimento(String observacoesPosOperatorias) void
+  +cancelarProcedimento() void
 }
 
-%% ===== Internacao e Quarto =====
 class Internacao {
   -id : Long
-  -dataEntrada : LocalDateTime
-  -dataAlta : LocalDateTime
-  -motivo : String
-  -observacao : String
-  -status : StatusInternacao
-  +registrarEntrada(Quarto quarto) void
-  +registrarAlta(LocalDateTime dataAlta) void
-  +cancelar() void
-  +podeCancelar() boolean
-  +validar() void
-  +transferirQuarto(Quarto novoQuarto) void
-  +calcularDiasInternado() long
+  -dataEntrada : LocalDate
+  -dataPrevistaAlta : LocalDate
+  -dataEfetivaAlta : LocalDate
+  -observacoes : String
+  -status : StatusInternacao = ATIVA
 }
 
 class Quarto {
   -id : Long
-  -numero : int
-  -andar : int
+  -numero : String
+  -andar : String
+  -capacidadeMaxima : Integer
+  -ocupacaoAtual : Integer = 0
   -tipo : TipoQuarto
-  -capacidade : int
-  -ocupacaoAtual : int
-  -situacao : SituacaoQuarto
-  +possuiVaga() boolean
-  +ocupar() void
-  +liberar() void
-  +colocarEmManutencao() void
+  -situacao : StatusQuarto = DISPONIVEL
+  +isDisponivel() boolean
+  +adicionarPaciente() void
+  +removerPaciente() void
 }
 
-%% ===== Enumeracoes =====
 class StatusConsulta {
   <<enumeration>>
   AGENDADA
@@ -181,15 +107,14 @@ class StatusConsulta {
   CONCLUIDA
   CANCELADA
   NAO_COMPARECEU
-  +podeIrPara(StatusConsulta novo) boolean
 }
-class StatusEmergencia {
+class StatusAtendimentoEmergencia {
   <<enumeration>>
   AGUARDANDO_AVALIACAO
   EM_ATENDIMENTO
   CONCLUIDO
 }
-class Prioridade {
+class PrioridadeAtendimento {
   <<enumeration>>
   BAIXA
   MODERADA
@@ -202,90 +127,52 @@ class StatusProcedimento {
   EM_ANDAMENTO
   CONCLUIDO
   CANCELADO
-  +podeIrPara(StatusProcedimento novo) boolean
-}
-class TipoCirurgia {
-  <<enumeration>>
-  ELETIVA
-  URGENCIA
-  EMERGENCIA
-}
-class Especialidade {
-  <<enumeration>>
-  CARDIOLOGIA
-  NEUROLOGIA
-  ORTOPEDIA
-  PEDIATRIA
-  DERMATOLOGIA
-  GINECOLOGIA
 }
 class StatusInternacao {
   <<enumeration>>
   ATIVA
-  ALTA
-  CANCELADA
+  ALTA_REGISTRADA
+}
+class StatusQuarto {
+  <<enumeration>>
+  DISPONIVEL
+  OCUPADO
 }
 class TipoQuarto {
   <<enumeration>>
   ENFERMARIA
   APARTAMENTO
   UTI
-  ISOLAMENTO
-}
-class SituacaoQuarto {
-  <<enumeration>>
-  DISPONIVEL
-  OCUPADO
-  MANUTENCAO
-}
-class TipoRegistro {
-  <<enumeration>>
-  CONSULTA
-  EMERGENCIA
-  PROCEDIMENTO_CIRURGICO
-  INTERNACAO
-  ALTA
 }
 
-%% ===== Heranca =====
-ProfissionalSaude <|-- ClinicoGeral
-ProfissionalSaude <|-- MedicoEspecialista
-ProfissionalSaude <|-- Cirurgiao
+%% Herança
+Profissional <|-- MedicoClinicoGeral
+Profissional <|-- MedicoEspecialista
+Profissional <|-- Cirurgiao
 Atendimento <|-- Consulta
 Consulta <|-- ConsultaRotina
 Consulta <|-- ConsultaEspecializada
 Atendimento <|-- AtendimentoEmergencia
 Atendimento <|-- ProcedimentoCirurgico
 
-%% ===== Associacoes =====
-Paciente "1" *-- "1" Historico : possui
-Historico "1" *-- "0..*" RegistroHistorico : contem
+%% Associações @ManyToOne
 Atendimento "0..*" --> "1" Paciente : paciente
-Atendimento "0..*" --> "0..1" ProfissionalSaude : responsavel
-Cirurgiao "1" o-- "0..*" ProcedimentoCirurgico : realiza
-ClinicoGeral "1" --> "0..*" Encaminhamento : emite
-Encaminhamento "0..*" --> "1" Paciente : paciente
+Atendimento "0..*" --> "1" Profissional : profissionalResponsavel
 Internacao "0..*" --> "1" Paciente : paciente
-Internacao "0..*" --> "1" Quarto : ocupa
-Internacao "0..*" --> "1" ProfissionalSaude : responsavel
+Internacao "0..*" --> "1" Profissional : profissionalResponsavel
+Internacao "0..*" --> "1" Quarto : quarto
 
-%% ===== Realizacao (implementa interface) =====
-Validavel <|.. Atendimento
-Validavel <|.. Internacao
-Cancelavel <|.. Consulta
-Cancelavel <|.. ProcedimentoCirurgico
-Cancelavel <|.. Internacao
+%% Dependências usadas em validarAtendimento()
+MedicoClinicoGeral ..> ConsultaRotina : use
+MedicoClinicoGeral ..> AtendimentoEmergencia : use
+MedicoEspecialista ..> ConsultaEspecializada : use
+Cirurgiao ..> ProcedimentoCirurgico : use
 
-%% ===== Enums ligados as classes que os usam =====
+%% Enums
 Consulta "0..*" --> "1" StatusConsulta
-AtendimentoEmergencia "0..*" --> "1" StatusEmergencia
-AtendimentoEmergencia "0..*" --> "1" Prioridade
+AtendimentoEmergencia "0..*" --> "1" StatusAtendimentoEmergencia
+AtendimentoEmergencia "0..*" --> "1" PrioridadeAtendimento
 ProcedimentoCirurgico "0..*" --> "1" StatusProcedimento
-ProcedimentoCirurgico "0..*" --> "1" TipoCirurgia
-MedicoEspecialista "0..*" --> "1" Especialidade
-ConsultaEspecializada "0..*" --> "1" Especialidade
-Encaminhamento "0..*" --> "1" Especialidade
 Internacao "0..*" --> "1" StatusInternacao
+Quarto "0..*" --> "1" StatusQuarto
 Quarto "0..*" --> "1" TipoQuarto
-Quarto "0..*" --> "1" SituacaoQuarto
-RegistroHistorico "0..*" --> "1" TipoRegistro
