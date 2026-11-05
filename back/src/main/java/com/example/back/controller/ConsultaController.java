@@ -33,6 +33,12 @@ public class ConsultaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(atendimentoService.salvar(atendimento));
     }
 
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Atendimento> atualizarStatus(@PathVariable Long id,
+            @RequestParam com.example.back.enums.StatusConsulta status) {
+        return ResponseEntity.ok(atendimentoService.atualizarStatusConsulta(id, status));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelarConsulta(@PathVariable Long id) {
         atendimentoService.excluir(id);
