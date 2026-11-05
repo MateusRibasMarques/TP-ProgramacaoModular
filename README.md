@@ -4,10 +4,10 @@ Trabalho prático desenvolvido para a disciplina de **Programação Modular**. O
 
 ---
 
-## 📄 Documentação
+## 📄 Documentação (Versão atualizada de acordo com a Sprint2)
 
-- **Diagrama UML:** [Diagrama UML TP-PM.drawio.pdf](https://github.com/user-attachments/files/32806184/Diagrama.UML.TP-PM.drawio.pdf)
-- **Cartão CRC:** [CartaoCRC-MedCore.docx](https://github.com/user-attachments/files/32807150/CartaoCRC-MedCore.docx)
+- **Diagrama UML:** [Diagrama.UML.TP-PM.drawio-version(2).pdf](artefatos/Diagrama.UML.TP-PM.drawio-version%282%29.pdf)
+- **Cartão CRC:** [CartaoCRC-MedCore.pdf](artefatos/CartaoCRC-MedCore.pdf)
 
 ---
 
