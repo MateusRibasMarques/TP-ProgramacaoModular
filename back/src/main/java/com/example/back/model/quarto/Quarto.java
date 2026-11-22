@@ -1,7 +1,9 @@
+
 package com.example.back.model.quarto;
 
 import com.example.back.enums.StatusQuarto;
 import com.example.back.enums.TipoQuarto;
+import com.example.back.exeptions.QuartoSemVagasException;
 import jakarta.persistence.*;
 
 @Entity
@@ -38,9 +40,11 @@ public class Quarto {
 
     public void adicionarPaciente() {
         if (!isDisponivel()) {
-            throw new IllegalStateException("O quarto já atingiu sua capacidade máxima.");
+            throw new QuartoSemVagasException("O quarto já atingiu sua capacidade máxima.");
         }
+
         this.ocupacaoAtual++;
+
         if (this.ocupacaoAtual.equals(this.capacidadeMaxima)) {
             this.situacao = StatusQuarto.OCUPADO;
         }
@@ -50,6 +54,7 @@ public class Quarto {
         if (this.ocupacaoAtual > 0) {
             this.ocupacaoAtual--;
         }
+
         this.situacao = StatusQuarto.DISPONIVEL;
     }
 

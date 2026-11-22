@@ -1,3 +1,4 @@
+
 package com.example.back.service;
 
 import com.example.back.enums.StatusInternacao;
@@ -43,6 +44,13 @@ public class InternacaoService {
         internacao.setPaciente(pacienteService.buscarPorId(internacao.getPaciente().getId()));
         internacao.setProfissionalResponsavel(
                 profissionalService.buscarPorId(internacao.getProfissionalResponsavel().getId()));
+
+        boolean possuiInternacaoAtiva = internacaoRepository.existsByPaciente_IdAndStatus(
+                internacao.getPaciente().getId(), StatusInternacao.ATIVA);
+
+        if (possuiInternacaoAtiva) {
+            throw new IllegalStateException("O paciente já possui uma internação ativa.");
+        }
 
         Quarto quarto = quartoService.buscarPorId(internacao.getQuarto().getId());
         quarto.adicionarPaciente();

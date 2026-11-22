@@ -1,5 +1,9 @@
+
 package com.example.back.controller;
 
+import com.example.back.exeptions.AtendimentoIndisponivelException;
+import com.example.back.exeptions.ProfissionalIncompativelException;
+import com.example.back.exeptions.QuartoSemVagasException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +35,27 @@ public class GlobalExceptionHandler {
         Map<String, String> error = new HashMap<>();
         error.put("erro", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AtendimentoIndisponivelException.class)
+    public ResponseEntity<Object> handleAtendimentoIndisponivel(AtendimentoIndisponivelException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("erro", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ProfissionalIncompativelException.class)
+    public ResponseEntity<Object> handleProfissionalIncompativel(ProfissionalIncompativelException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("erro", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QuartoSemVagasException.class)
+    public ResponseEntity<Object> handleQuartoSemVagas(QuartoSemVagasException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("erro", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
